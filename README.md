@@ -1,4 +1,5 @@
 * User
+
 | column | data |
 | ---- | ---- |
 | id | bigint |
@@ -8,6 +9,7 @@
 
 
 * Task
+
 | column | data |
 | ---- | ---- |
 | id | bigint |
@@ -21,6 +23,7 @@
 
 
 * Label
+
 | column | data |
 | ---- | ---- |
 | id | bigint |
