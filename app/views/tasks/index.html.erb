@@ -9,10 +9,11 @@
     <tr>
       <td><%= task.list %></td>
       <td><%= task.detail %></td>
-      <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
-      <td><%= link_to "ブログを編集する", edit_task_path(task.id) %></td>
+      <td><%= link_to '詳細', task_path(task.id) %></td>
+      <td><%= link_to '編集', edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
+      <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' } %></td>
     </tr>
   <% end %>
 </table>
 
-<%= link_to 'タスクを登録する', new_task_path %>
+<%= link_to "タスクを登録する", new_task_path %>
