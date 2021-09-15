@@ -21,6 +21,13 @@
 | user_id | bigint |
 | label_id | bigint |
 
+* Labeling
+
+| column | data |
+| ---- | ---- |
+| id | bigint |
+| task_id | bigint |
+| label_id | bigint |
 
 * Label
 
