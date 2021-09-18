@@ -6,10 +6,14 @@
   <tr>
     <th><%= form.label :タスク名 %></th>
     <td><%= form.text_field :list %></td>
+    <th><%= form.label :ステータス %></th>
+    <td><%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %></td>
     <td><%= form.submit '検索' %></td>
   </tr>
+
   <% end %>
 </table>
+
 
 <%= link_to "終了期限が近い順で並び替え", tasks_path(sort_expired: "true") %>
 
