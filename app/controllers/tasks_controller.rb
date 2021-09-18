@@ -6,6 +6,10 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all.order(created_at: :desc)
     end
+
+    if params[:search].present?
+      @tasks = Task.where("list LIKE ?","%#{params[:search][:list]}%") 
+    end
   end
 
   def new

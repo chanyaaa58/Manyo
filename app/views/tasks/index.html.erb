@@ -1,6 +1,18 @@
 <h1>タスク一覧</h1>
 <p><%= notice %></p>
+
+<table>
+  <%= form_with(scope: :search, url:tasks_path, method: :get,local: true)do |form| %>
+  <tr>
+    <th><%= form.label :タスク名 %></th>
+    <td><%= form.text_field :list %></td>
+    <td><%= form.submit '検索' %></td>
+  </tr>
+  <% end %>
+</table>
+
 <%= link_to "終了期限が近い順で並び替え", tasks_path(sort_expired: "true") %>
+
 <table>
   <tr>
     <th>タスク名</th>
