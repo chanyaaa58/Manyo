@@ -1,4 +1,6 @@
 <h1>タスク詳細画面</h1>
 <p>タスク名: <%= @task.list %></p>
-<p>詳細: <%= @task.detail %></p>
-<p>終了期限: <%= @task.expired_at %></p>
+<p>タスク詳細: <%= @task.detail %></p>
+<p>終了期限: <%= l @task.expired_at %></p>
+<p>ステータス: <%= @task.status %></p>
+<p>優先順位: <%= @task.priority %></p>

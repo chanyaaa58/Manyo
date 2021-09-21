@@ -7,9 +7,9 @@
     <th><%= form.label :タスク名 %></th>
     <td><%= form.text_field :list %></td>
     <th><%= form.label :ステータス %></th>
-    <td><%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"], ["", ""]] %></td>
+    <td><%= form.select :status, [["", ""], ["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %></td>
     <th><%= form.label :優先順位 %></th>
-    <td><%= form.select :priority, [["低", "低"], ["中", "中"], ["高", "高"], ["", ""]] %></td>
+    <td><%= form.select :priority, [["", ""], ["低", "低"], ["中", "中"], ["高", "高"]] %></td>
     <td><%= form.submit '検索' %></td>
   </tr>
   <% end %>
@@ -43,4 +43,5 @@
   <% end %>
 </table>
 
-<%= link_to "タスクを登録する", new_task_path %>
+<p><%= link_to "タスクを登録する", new_task_path %></p>
+<p><%= link_to "一覧画面へ戻る", tasks_path %></p>

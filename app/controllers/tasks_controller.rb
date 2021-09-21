@@ -7,8 +7,8 @@ class TasksController < ApplicationController
       @tasks = Task.all.order("priority")
     else
       @tasks = Task.all.order(created_at: :desc)
+      # binding.irb
     end
-
     if params[:search].present?
       if params[:search][:list].present? && params[:search][:status].present?
         @tasks = Task.where('list LIKE ?', "%#{params[:search][:list]}%").where(status: params[:search][:status])
