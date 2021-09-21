@@ -52,8 +52,8 @@ git push heroku step2:master
 | id | bigint |
 | list | string |
 | detail | string |
-| status | string |
-| deadline | date |
+| status | integer |
+| expired_at | datetime |
 | priority | integer |
 | user_id | bigint |
 | label_id | bigint |
