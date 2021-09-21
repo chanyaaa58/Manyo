@@ -23,11 +23,11 @@
       </div>
       <div class="field">
         <%= form.label :ステータス %>
-        <%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい" %>
+        <%= form.select :status, Task.statuses.keys %>
     　</div>
       <div class="field">
         <%= form.label :優先順位 %>
-        <%= form.select :priority, [["低", "低"], ["中", "中"], ["高", "高"]], include_blank: "選択して下さい" %>
+        <%= form.select :priority, Task.priorities.keys %>
       </div>
   
       <%= form.submit "登録" %>

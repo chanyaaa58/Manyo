@@ -2,19 +2,16 @@
 <p><%= notice %></p>
 
 <table>
-  <%= form_with(scope: :search, url:tasks_path, method: :get,local: true)do |form| %>
+  <%= form_with(url:tasks_path, method: :get,local: true)do |form| %>
   <tr>
     <th><%= form.label :タスク名 %></th>
     <td><%= form.text_field :list %></td>
     <th><%= form.label :ステータス %></th>
-    <td><%= form.select :status, [["", ""], ["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %></td>
-    <th><%= form.label :優先順位 %></th>
-    <td><%= form.select :priority, [["", ""], ["低", "低"], ["中", "中"], ["高", "高"]] %></td>
+    <td><%= form.select :status, Task.statuses.keys %></td>
     <td><%= form.submit '検索' %></td>
   </tr>
   <% end %>
 </table>
-
 
 <%= link_to "終了期限が近い順で並び替え", tasks_path(sort_expired: "true") %>
 <%= link_to "優先順位が高い順で並び替え", tasks_path(sort_priority: "true") %>
