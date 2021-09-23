@@ -7,11 +7,10 @@ RSpec.describe 'タスク管理機能', type: :system do
   #　テストをやる前にやっておきたいことを定義しておく
 
   # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
+  # タスクをbeforeで先に作っておく
   before do
     FactoryBot.create(:task, list: 'test_list')
     FactoryBot.create(:second_task, list: 'test_list2')
-  #   visit tasks_path
-  #   タスクをbeforeで先に作っておく
   end
 
   describe '新規作成機能' do
@@ -54,8 +53,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         # visit tasks_path
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
         # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
-        task = FactoryBot.create(:task)
-        task2 = FactoryBot.create(:second_task)
         visit tasks_path
         expect(page).to have_content 'test_list'
         expect(page).to have_content 'test_list2'
@@ -65,12 +62,20 @@ RSpec.describe 'タスク管理機能', type: :system do
     # step2追加テスト
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
-        task = FactoryBot.create(:task)
-        task2 = FactoryBot.create(:second_task)
         visit tasks_path
         task_list = all('.task_row')
         expect(task_list[0]).to have_content 'test_list2'
         expect(task_list[1]).to have_content 'test_list'
+      end
+    end
+    # step3追加テスト
+    context ' 終了期限でソートするというリンクを押した場合' do
+      it '終了期限の降順に並び替えられたタスク一覧が表示される' do
+        visit tasks_path
+        click_on '終了期限で並び替え'
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content '2021/09/25'
+        expect(task_list[1]).to have_content '2021/09/22'
       end
     end
   end

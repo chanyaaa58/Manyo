@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all.order(created_at: :desc)
    
-    @tasks = @tasks.reorder("expired_at") if params[:sort_expired]
+    @tasks = @tasks.reorder(expired_at: :desc) if params[:sort_expired]
     @tasks = @tasks.reorder("priority") if params[:sort_priority]
     
     #タイトル名・ステータスの検索
