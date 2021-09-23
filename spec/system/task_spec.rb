@@ -5,17 +5,19 @@ RSpec.describe 'タスク管理機能', type: :system do
   # let!(:task) { FactoryBot.create(:task, list: 'test_list') }
   # let!(:second_task) { FactoryBot.create(:second_task, list: 'test_list2') }
   #　テストをやる前にやっておきたいことを定義しておく
-  # before do
-  #   # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
+
+  # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
+  before do
+    FactoryBot.create(:task, list: 'test_list')
+    FactoryBot.create(:second_task, list: 'test_list2')
   #   visit tasks_path
   #   タスクをbeforeで先に作っておく
-  # end
+  end
 
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
        # 1.new_task_pathに遷移する（新規作成ページに遷移する）
-       # new_task_pathにvisitする処理を書く
          visit new_task_path
          # 2.新規登録内容を入力する
          #「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄にタスクリストと詳細をそれぞれ入力する
@@ -23,6 +25,16 @@ RSpec.describe 'タスク管理機能', type: :system do
          #「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
          fill_in 'task[list]', with: 'test_list'
          fill_in 'task[detail]', with: 'test_detail'
+
+         # step3追加条件
+         # 終了期限の設定において、プルダウン選択式の為、fill_in '', withではなく、select '', fromを使う
+         select '2021', from: 'task_expired_at_1i'
+         select '9', from: 'task_expired_at_2i'
+         select '22', from: 'task_expired_at_3i'
+        #  select '20', from: 'task_expired_at_4i'
+        #  select '00', from: 'task_expired_at_5i'
+         select '完了', from: 'task_status'
+         select '高', from: 'task_priority'
          # 3.「登録」というvalue（表記文字）のあるボタンをクリックする
          #「登録」というvalue（表記文字）のあるボタンをclickする処理を書く
          click_button '登録'
@@ -69,6 +81,39 @@ RSpec.describe 'タスク管理機能', type: :system do
         # task = FactoryBot.create(:second_task)
         visit task_path(task.id)
         expect(page).to have_content 'test_list'
+      end
+    end
+  end
+  # step3追加テスト
+  describe '検索機能' do
+    context 'タスク名であいまい検索をした場合' do
+      it "検索ワードを含むタスク名でソートされる" do
+        visit tasks_path
+        # タスク名の一部「test」という文字列をfill_in（入力）する処理を書く
+        # 'list'はタスク登録画面のtext_field名（検証ツール参照）
+        fill_in 'list', with: 'test'
+        click_button '検索'
+        expect(page).to have_content 'test'
+      end
+    end
+
+    context 'ステータス検索をした場合' do
+      it "ステータス「未着手」「着手中」「完了」の内、完全一致するタスクでソートされる" do
+        visit tasks_path
+        select "完了", from: 'status'
+        click_button '検索'
+        expect(page).to have_content '完了'
+      end
+    end
+
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索ワードをタスク名に含み、かつステータスと完全一致するタスクでソートされる" do
+        visit tasks_path
+        fill_in "list", with: 'test'
+        select "完了", from: 'status'
+        click_button '検索'
+        expect(page).to have_content 'test'
+        expect(page).to have_content '完了'
       end
     end
   end
