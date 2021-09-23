@@ -1,11 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'タスク管理機能', type: :system do
-  # taskという変数に対して、FactoryBotのテンプレートで定義したDBの登録情報を格納することができる
-  # let!(:task) { FactoryBot.create(:task, list: 'test_list') }
-  # let!(:second_task) { FactoryBot.create(:second_task, list: 'test_list2') }
-  #　テストをやる前にやっておきたいことを定義しておく
-
   # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
   # タスクをbeforeで先に作っておく
   before do
