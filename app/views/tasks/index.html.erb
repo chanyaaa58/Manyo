@@ -42,3 +42,5 @@
 
 <p><%= link_to "タスクを登録する", new_task_path %></p>
 <p><%= link_to "一覧画面へ戻る", tasks_path %></p>
+
+<%= paginate @tasks %>
