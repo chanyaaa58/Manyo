@@ -2,6 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
     @tasks = Task.all.order(created_at: :desc)
+    # 1ページに表示するレコード数は10件
+    @tasks = Task.all.page(params[:page]).per(10)
 
     @tasks = @tasks.reorder(expired_at: :desc) if params[:sort_expired]
     @tasks = @tasks.reorder("priority") if params[:sort_priority]
@@ -9,34 +11,6 @@ class TasksController < ApplicationController
     #タイトル名・ステータスの検索
     @tasks = @tasks.search_by_list(params[:list]) if params[:list].present?
     @tasks = @tasks.search_by_status(params[:status]) if params[:status].present?
-    # 1ページに表示するレコード数は10件
-    @tasks = Task.all.page(params[:page]).per(10)
-
-    # if params[:search].present?
-      # if params[:list].present? && params[:status].present?
-      #   #title and statusの両方が成り立つ検索結果を返す
-      #   @tasks = Task.search_by_list_and_status
-      # #渡されたパラメータがtask titleのみだったとき
-      # elsif params[:list].present?
-      #   @tasks = Task.search_by_list
-      # #渡されたパラメータがステータスのみだったとき
-      # elsif params[:status].present?
-      #   @tasks = Task.search_by_status
-      # end
-    #↓モデルにscopeで定義する前のコード
-    # #タイトル名・ステータスの検索
-    # if params[:search].present?
-    #   if params[:search][:list].present? && params[:search][:status].present?
-    #     #title and statusの両方が成り立つ検索結果を返す
-    #     @tasks = Task.where('list LIKE ?', "%#{params[:search][:list]}%").where(status: params[:search][:status])
-    #   #渡されたパラメータがtask titleのみだったとき
-    #   elsif params[:search][:list].present?
-    #     @tasks = Task.where('list LIKE ?', "%#{params[:search][:list]}%")
-    #   #渡されたパラメータがステータスのみだったとき
-    #   elsif params[:search][:status].present?
-    #     @tasks = Task.where(status: params[:search][:status])
-
-    # end
   end
 
   def new

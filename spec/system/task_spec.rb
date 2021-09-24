@@ -59,8 +59,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '新しいタスクが一番上に表示される' do
         visit tasks_path
         task_list = all('.task_row')
-        expect(task_list[0]).to have_content 'test_list2'
-        expect(task_list[1]).to have_content 'test_list'
+        expect(task_list[0]).to have_content 'test_list'
+        expect(task_list[1]).to have_content 'test_list2'
       end
     end
     # step3追加テスト
@@ -117,11 +117,13 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
 
-    context '優先順位でソートするというリンクを押した場合' do
+    context '優先順位が高い順で並び替えというリンクを押した場合' do
       it '優先順位が高い順に並んでいる' do
         visit tasks_path
         click_on '優先順位が高い順で並び替え'
-        task_list = all('.task_row')
+        # binding.irb
+        sleep 0.3
+        task_list = all('.task_priority')
         expect(task_list[0]).to have_content '高'
         expect(task_list[1]).to have_content '中'
       end
