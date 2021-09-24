@@ -68,6 +68,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '終了期限の降順に並び替えられたタスク一覧が表示される' do
         visit tasks_path
         click_on '終了期限で並び替え'
+        # binding.irb
         task_list = all('.task_row')
         expect(task_list[0]).to have_content '2021/09/25'
         expect(task_list[1]).to have_content '2021/09/22'
