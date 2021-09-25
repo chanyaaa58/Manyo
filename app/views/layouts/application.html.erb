@@ -4,12 +4,24 @@
     <title>Manyo</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="viewport" content="width=device-width">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header>
+      <ul>
+        <li><a href="http://localhost:3000/tasks/new">新規作成</a></li>
+        <li><a href="http://localhost:3000">トップページ</a></li>
+      </ul>
+    </header>
+      <% flash.each do |key, value| %>
+        <%= content_tag(:div, value, class: "#{key}") %>
+      <% end %>
     <%= yield %>
+    <footer>
+      <p>2021.9.24 aya takahashi</p>
+    </footer>
   </body>
 </html>
