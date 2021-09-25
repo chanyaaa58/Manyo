@@ -5,4 +5,6 @@ class User < ApplicationRecord
     validates :email, length:{ in: 1..255 }
   end
   validates :email,format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  has_secure_password
+  validates :password, length: { minimum: 6 }
 end
