@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
+  before_action :check_user_login, only: [:new]
 
   def new
     @user = User.new
@@ -23,5 +24,11 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def check_user_login
+    if logged_in?
+        redirect_to tasks_path, notice:"ログイン中です。まずログアウトしてください。"
+    end
   end
 end
