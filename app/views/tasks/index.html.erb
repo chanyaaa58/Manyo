@@ -17,6 +17,7 @@
 
 <table>
   <tr>
+    <th>作成者</th>
     <th>タスク名</th>
     <th>タスク詳細</th>
     <th>作成日</th>
@@ -26,6 +27,7 @@
   </tr>
   <% @tasks.each do |task| %>
     <tr class = 'task_row'>
+      <td><%= task.user.name %></td>
       <td><%= task.list %></td>
       <td><%= task.detail %></td>
       <td><%= l task.created_at %></td>
