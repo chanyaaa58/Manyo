@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to tasks_path, notice: "タスクを登録しました！"
     else
@@ -43,6 +43,11 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     redirect_to tasks_path, notice: "タスクを削除しました！"
+  end
+
+  def confirm
+    @task = current_user.tasks.build(task_params)
+    render :new if @task.invalid?
   end
 
   private

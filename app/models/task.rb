@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  belongs_to :user
   with_options presence: true do
     validates :list, length:{ in: 1..30 }
     validates :detail, length:{ in: 1..100 }

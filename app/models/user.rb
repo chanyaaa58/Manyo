@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :tasks
   before_validation { email.downcase! }
     validates :name, length:{ in: 1..30 }
     validates :email, length:{ in: 1..255 },
