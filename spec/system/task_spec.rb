@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
   # タスクをbeforeで先に作っておく
+
   before do
     FactoryBot.create(:task, list: 'test_list')
     FactoryBot.create(:second_task, list: 'test_list2')
