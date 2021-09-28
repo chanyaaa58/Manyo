@@ -3,9 +3,9 @@ class TasksController < ApplicationController
   before_action :user_check_t, only: [:edit, :update, :destroy]
 
   def index
-    @tasks = current_user.tasks.all.order(created_at: :desc)
+    @tasks = current_user.tasks.all.includes(:user).order(created_at: :desc)
     # 1ページに表示するレコード数は10件
-    @tasks = current_user.tasks.all.page(params[:page]).per(10)
+    @tasks = current_user.tasks.all.includes(:user).page(params[:page]).per(10)
 
     @tasks = @tasks.reorder(expired_at: :desc) if params[:sort_expired]
     @tasks = @tasks.reorder("priority") if params[:sort_priority]

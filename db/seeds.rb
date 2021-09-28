@@ -1,5 +1,17 @@
 User.create!(name: "管理者1",
-             email: "admin@example.jp",
-             password:  "11111111",
-             password_confirmation: "11111111",
-             admin: true)
+            email: "admin@example.jp",
+            password: "test01",
+            password_confirmation: "test01",
+            admin: true)
+
+User.create!(name: "管理者2",
+            email: "admin2@example.jp",
+            password: "test02",
+            password_confirmation: "test02",
+            admin: true)
+
+User.create!(name: "一般ユーザー1",
+            email: "user1@example.jp",
+            password: "test03",
+            password_confirmation: "test03",
+            admin: false)
