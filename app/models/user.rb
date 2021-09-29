@@ -20,7 +20,12 @@ class User < ApplicationRecord
   end
 
   def update_action
-    if User.where(admin: true).count == 1 && user.present? && self.admin == false
+    # if User.where(admin: true).count == 1 && self.admin == false
+    @admin_users = User.where(admin: true)
+    # 権限持っている人は複数いるかも。今ログインしている人は一番上ではないかも
+    if (@admin_users.count == 1 && @admin_users.first == self) && self.admin == false
+      #errors.add バリデーションメッセージの役割
+      errors.add :base, "管理者が一人も居ない状態にはできません！"
       throw :abort
     end
   end

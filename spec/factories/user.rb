@@ -5,7 +5,7 @@ FactoryBot.define do
     email { 'admin@mail.jp' }
     password { '444444' }
     password_confirmation { '444444' }
-  admin {true}
+    admin {true}
   end
 # 作成するテストデータ2つ目は「basic_user」
   factory :basic_user, class: User do
