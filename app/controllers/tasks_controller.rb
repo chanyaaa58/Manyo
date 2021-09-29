@@ -1,9 +1,11 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :user_check_t, only: [:edit, :update, :destroy]
+
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = current_user.tasks.all.includes(:user).order(created_at: :desc)
     # 1ページに表示するレコード数は10件
-    @tasks = Task.all.page(params[:page]).per(10)
+    @tasks = current_user.tasks.all.includes(:user).page(params[:page]).per(10)
 
     @tasks = @tasks.reorder(expired_at: :desc) if params[:sort_expired]
     @tasks = @tasks.reorder("priority") if params[:sort_priority]
@@ -18,7 +20,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to tasks_path, notice: "タスクを登録しました！"
     else
@@ -45,6 +47,11 @@ class TasksController < ApplicationController
     redirect_to tasks_path, notice: "タスクを削除しました！"
   end
 
+  def confirm
+    @task = current_user.tasks.build(task_params)
+    render :new if @task.invalid?
+  end
+
   private
   def task_params
     params.require(:task).permit(:list, :detail, :expired_at, :status, :priority)
@@ -52,5 +59,12 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def user_check_t
+    task = Task.find(params[:id])
+    if task.user.id != current_user.id
+      redirect_to tasks_path, notice: "権限がありません"
+    end
   end
 end
