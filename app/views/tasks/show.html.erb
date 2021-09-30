@@ -4,5 +4,10 @@
 <p>終了期限: <%= l @task.expired_at %></p>
 <p>ステータス: <%= @task.status %></p>
 <p>優先順位: <%= @task.priority %></p>
+<p>タスクジャンル:
+  <% @task.labels.each do |label| %>
+    <%= label.name %>
+  <% end %>
+</p>
 
 <%= link_to '一覧画面へ戻る', tasks_path %>

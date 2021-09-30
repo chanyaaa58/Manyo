@@ -29,6 +29,13 @@
       <%= form.label :優先順位 %>
       <%= form.select :priority, Task.priorities.keys %>
     </div>
+    <div class="field">
+      <%= form.label :タスクジャンル %>
+      <% Label.all.each do |label| %>
+        <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+        <label><%= label.name %></label>
+      <% end %>
+    </div>
 
     <%= form.submit "登録", class: "btn btn-primary" %>
   <% end %>
