@@ -4,15 +4,18 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks.all.includes(:user).order(created_at: :desc)
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     # 1ページに表示するレコード数は10件
-    @tasks = current_user.tasks.all.includes(:user).page(params[:page]).per(10)
+    # @tasks = current_user.tasks.all.includes(:user).page(params[:page]).per(10)
 
     @tasks = @tasks.reorder(expired_at: :desc) if params[:sort_expired]
     @tasks = @tasks.reorder("priority") if params[:sort_priority]
+    # binding.irb
 
     #タイトル名・ステータスの検索
     @tasks = @tasks.search_by_list(params[:list]) if params[:list].present?
     @tasks = @tasks.search_by_status(params[:status]) if params[:status].present?
+    @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def new
@@ -54,7 +57,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:list, :detail, :expired_at, :status, :priority)
+    params.require(:task).permit(:list, :detail, :expired_at, :status, :priority, { label_ids: [] })
   end
 
   def set_task
